@@ -114,9 +114,7 @@ def gameLoop(kitty):
 
 def command(kitty):
     while True:
-        # command = input(f"Enter command (status, feed, play, heal, exit): ").strip().lower()
-
-        command = "play"
+        command = input(f"Enter command (status, feed, play, heal, exit): ").strip().lower()
 
         if command == "status":
             print(f"Updated Stats:")
@@ -132,7 +130,9 @@ def command(kitty):
                 print(f"{kitty['name']} is full!")
                 print(f"Hunger: {kitty['hunger']}")
         elif command == "play":
-            play(kitty)
+            returnvaluer = play(kitty)
+            if returnvaluer == 1:
+                continue
         elif command == "heal":
             if kitty["health"] < 5:
                 kitty["health"] += 1
@@ -150,40 +150,42 @@ def command(kitty):
             print("Invalid command, try again.")
 
 def play(kitty):
-    choice = input(r"""Choose your minigame!
-        Option 1: Rock paper scissors
-        Option 2: Hangman
-        (more coming later!)
-        (or type exit to quit minigame selector)
-        1, 2, or exit: 
-    """).strip().lower()
+    while True:
+        choice = input(r"""Choose your minigame!
+            Option 1: Rock paper scissors
+            Option 2: Hangman
+            (more coming later!)
+            (or type exit to quit minigame selector)
+            1, 2, or exit: 
+        """).strip().lower()
 
-    if choice == "1":
-        wlt = rpt()
-        if wlt == "win" and kitty["happiness"] < 5:
-            kitty["happiness"] += 1
-            print(f"You played with {kitty['name']}!")
-            print(kitty["img"])
-            print(f"Happiness: {kitty['happiness']}")
-        elif wlt == "win" and kitty["happiness"] >= 5:
-            print(kitty["img"])
-            print(f"{kitty['name']} is already sooo happy!")
-            print(f"Happiness: {kitty['happiness']}")
-        return
-    elif choice == "2":
-        wlt = hm()
-        if wlt == "win" and kitty["happiness"] < 5:
-            kitty["happiness"] += 1
-            print(f"You played with {kitty['name']}!")
-            print(kitty["img"])
-            print(f"Happiness: {kitty['happiness']}")
-        elif wlt == "win" and kitty["happiness"] >= 5:
-            print(kitty["img"])
-            print(f"{kitty['name']} is already sooo happy!")
-            print(f"Happiness: {kitty['happiness']}")
-        return
-    elif choice == "exit":
-        return
+        if choice == "1":
+            wlt = rpt()
+            if wlt == "win" and kitty["happiness"] < 5:
+                kitty["happiness"] += 1
+                print(f"You played with {kitty['name']}!")
+                print(kitty["img"])
+                print(f"Happiness: {kitty['happiness']}")
+            elif wlt == "win" and kitty["happiness"] >= 5:
+                print(kitty["img"])
+                print(f"{kitty['name']} is already sooo happy!")
+                print(f"Happiness: {kitty['happiness']}")
+            return
+        elif choice == "2":
+            wlt = hm()
+            if wlt == "win" and kitty["happiness"] < 5:
+                kitty["happiness"] += 1
+                print(f"You played with {kitty['name']}!")
+                print(kitty["img"])
+                print(f"Happiness: {kitty['happiness']}")
+            elif wlt == "win" and kitty["happiness"] >= 5:
+                print(kitty["img"])
+                print(f"{kitty['name']} is already sooo happy!")
+                print(f"Happiness: {kitty['happiness']}")
+            return
+        elif choice == "exit":
+            print("Exiting minigame selector...")
+            return 1
 
 def rpt():
     print("IT'S TIME TO ROCK PAPER SCISSORS TO THE DEATH!- I mean... for funsies!! Yeah...")
@@ -284,3 +286,5 @@ if __name__ == "__main__":
 # random todo list
 # - add timesleep everywhere
 # - fix the play choice after minigame
+# - add select food for food
+# - uncomment everything
