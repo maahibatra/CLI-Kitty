@@ -65,13 +65,13 @@ def img():
         # for key, art in options.items():
         #     print(f"Option {key}:\n{art}")
 
-        choice = input("1, 2, 3, or 4?: ").strip()
-        if choice in options:
-            return options[choice]
-        else:
-            print("Invalid choice, try again.")
+        # choice = input("1, 2, 3, or 4?: ").strip()
+        # if choice in options:
+        #     return options[choice]
+        # else:
+        #     print("Invalid choice, try again.")
 
-        # return options["2"]
+        return options["2"]
 
 
 def name():
@@ -133,15 +133,6 @@ def command(kitty):
                 print(f"Hunger: {kitty['hunger']}")
         elif command == "play":
             play(kitty)
-            # if kitty["happiness"] < 5:
-            #     kitty["happiness"] += 1
-            #     print(f"You played with {kitty['name']}!")
-            #     print(kitty["img"])
-            #     print(f"Happiness: {kitty['happiness']}")
-            # else:
-            #     print(kitty["img"])
-            #     print(f"{kitty['name']} is sooo happy!")
-            #     print(f"Happiness: {kitty['happiness']}")
         elif command == "heal":
             if kitty["health"] < 5:
                 kitty["health"] += 1
@@ -159,41 +150,114 @@ def command(kitty):
             print("Invalid command, try again.")
 
 def play(kitty):
-    while True:
-        choice = input(r"""Choose your minigame!
-            Option 1: Shooting stars
-            (more coming later!)
-        """)
+    choice = input(r"""Choose your minigame!
+        Option 1: Rock paper scissors
+        Option 2: Hangman
+        (more coming later!)
+        (or type exit to quit minigame selector)
+        1, 2, or exit: 
+    """).strip().lower()
 
-        if choice == "1":
-            ss(kitty)
+    if choice == "1":
+        wlt = rpt()
+        if wlt == "win" and kitty["happiness"] < 5:
+            kitty["happiness"] += 1
+            print(f"You played with {kitty['name']}!")
+            print(kitty["img"])
+            print(f"Happiness: {kitty['happiness']}")
+        elif wlt == "win" and kitty["happiness"] >= 5:
+            print(kitty["img"])
+            print(f"{kitty['name']} is already sooo happy!")
+            print(f"Happiness: {kitty['happiness']}")
+        return
+    elif choice == "2":
+        wlt = hm()
+        if wlt == "win" and kitty["happiness"] < 5:
+            kitty["happiness"] += 1
+            print(f"You played with {kitty['name']}!")
+            print(kitty["img"])
+            print(f"Happiness: {kitty['happiness']}")
+        elif wlt == "win" and kitty["happiness"] >= 5:
+            print(kitty["img"])
+            print(f"{kitty['name']} is already sooo happy!")
+            print(f"Happiness: {kitty['happiness']}")
+        return
+    elif choice == "exit":
+        return
 
-def ss(kitty):
-    star = "STAR"
-    width = 100
-    height = 20
-    position = random.randint(0, width - len(star) - 1)
-    kimgLines = kitty["img"].split("\n")
-    kimgHeight = len(kimgLines)
+def rpt():
+    print("IT'S TIME TO ROCK PAPER SCISSORS TO THE DEATH!- I mean... for funsies!! Yeah...")
+    print("If ya win, your CLI Kitty gets a play point! Assuming it's not already 5.")
+    print("Ready...")
+    time.sleep(1)
+    print("Set...")
+    time.sleep(1)
+    print("GO!")
 
-    for y in range(1, height - 1):
-        os.system("cls" if os.name == "nt" else "clear")
+    choices = ["rock", "paper", "scissors"]
+    computer = random.randint(0, 2)
+    player = input("Enter rock, paper, or scissors: ").strip().lower()
+
+    if player not in choices:
+        print("Invalid choice.")
+        return
     
-        print("+" + "-" * (width - 2) + "+")
+    time.sleep(1)
+    print(f"Computer chose: {choices[computer]}")
+    time.sleep(1)
 
-        for i in range(1, height - 1):
-            if i == y:
-                print("|" + " " * position + star + " " * (width - position - len(star) - 2) + "|")
-            else:
-                print("|" + " " * (width - 2) + "|")
+    if player == choices[computer]:
+        print("It's a tie!")
+        return "tie"
+    elif (player == "rock" and choices[computer] == "scissors") or \
+    (player == "paper" and choices[computer] == "rock") or \
+    (player == "scissors" and choices[computer] == "paper"):
+        print("You win!")
+        return "win"
+    else:
+        print("You lose...")
+        return "loss"
+    time.sleep(1)
 
-        for line in kimgLines:
-            padding = (width - len(line)) // 2
-            print(" " * padding + line + " " * (width - len(line) - padding - 2) + "|")
+def hm():
+    print("MUAHAHAHA I'M GONNA BEAT YOU AT THIS GAME AND STEAL UR CLI KTITY-... Friendly match, totally")
 
-        print("+" + "-" * (width - 2) + "+")
+    words = ["meow", "Minecraft", "shark", "starry"]
+    word = random.choice(words)
+    guessed = ["_"] * len(word)
+    attempts = 6
+    wrong_guesses = []
 
-        time.sleep(0.2)
+    while attempts > 0 and "_" in guessed:
+        guess = input("Guess a letter: ").lower().strip()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Bruh. One letter at a time.");
+            continue
+        
+        if guess in wrong_guesses or guess in guessed:
+            print("You already guessed that.")
+            continue
+        
+        if guess in word:
+            for i in range(len(word)):
+                if word[i] == guess:
+                    guessed[i] = guess
+            print("Nice one!")
+        else:
+            attempts -= 1
+            wrong_guesses.append(guess)
+            print(f"WRONG! {attempts} attempts left.")
+
+        print(" ".join(guessed))
+        print(f"Wrong guess: {', '.join(wrong_guesses)}")
+
+    if "_" not in guessed:
+        print(f"You win! For now... >:(")
+        return "win"
+    else:
+        print(f"YOU LOSE MUAHAHAHA... Well, you're a good carer, you can keep your CLI Kitty for now.")
+        return "loss"
 
 def main():
     if start():
@@ -203,7 +267,7 @@ def main():
             "img": kimg,
             "name": kname,
             "hunger": 5,
-            "happiness": 5,
+            "happiness": 3,
             "health": 5
         }
         print("Meet your CLI Kitty, " + kname + "!")
@@ -216,3 +280,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# random todo list
+# - add timesleep everywhere
+# - fix the play choice after minigame
