@@ -1,10 +1,11 @@
 import time
 import random
 import threading
+import os
 
 def start():
 #     print(r"""
-#                     ‿‿‿‿‿‿‿‿‿‿‿,       ⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⢀⡀⡀⠀⠀⠀⠀
+#                     ‿‿‿‿‿‿‿‿‿‿‿,     ⠀⢀⣀⡀⠀ ⡀⡀⠀⠀⠀⠀
 #         ⎮╲ ╲ ╲ ╲ ╲ ╲╲ ╲        ⠀⠀⠀⠀  ⡠⠇⠈⢙⠉⠐⠅⠀⡦⢄⠀⠀
 #         ⎮   ⎮︼︼︼︼︼︼︼︼︼  ⠀⠀ ⠀⢰⠁⠀⠑⠐⠀⠀⠀⠀ ⠀⠾⢄⠀
 #         ⎮   ⎮                 ⠀ ⠀⠊⠀⠀⠀⠀⠀⠄⢄⠀⠀⠀⠀⢀⡜⠁
@@ -38,7 +39,7 @@ def img():
          じしˍ,) ノ
         """,
         "2": r"""
-                    ＿＿.     
+                       ＿＿.     
         　　　      ୨୧ ＞　　フ 
         　　　　　| 　_　 _ l. 
         　 　　　／` ミ_ xノ   
@@ -64,13 +65,13 @@ def img():
         # for key, art in options.items():
         #     print(f"Option {key}:\n{art}")
 
-        # choice = input("1, 2, 3, or 4?: ").strip()
-        # if choice in options:
-        #     return options[choice]
-        # else:
-        #     print("Invalid choice, try again.")
+        choice = input("1, 2, 3, or 4?: ").strip()
+        if choice in options:
+            return options[choice]
+        else:
+            print("Invalid choice, try again.")
 
-        return options["2"]
+        # return options["2"]
 
 
 def name():
@@ -90,31 +91,32 @@ def gameLoop(kitty):
         time.sleep(random.randint(0, 5))
         randDec = random.randint(0, 2)
 
-        if randDec == 0:
-            kitty["hunger"] -= 1
-            print(f"{kitty['name']} is getting hungry!")
-            print(f"Hunger: {kitty['hunger']}")
-        elif randDec == 1:
-            kitty["happiness"] -= 1
-            print(f"{kitty['name']} looks sad...")
-            print(f"Happiness: {kitty['happiness']}")
-        elif randDec == 2:
-            kitty["health"] -= 1
-            print(f"{kitty['name']} is feeling sick!")
-            print(f"Health: {kitty['health']}")
+        # if randDec == 0:
+        #     kitty["hunger"] -= 1
+        #     print(f"{kitty['name']} is getting hungry!")
+        #     print(f"Hunger: {kitty['hunger']}")
+        # elif randDec == 1:
+        #     kitty["happiness"] -= 1
+        #     print(f"{kitty['name']} looks sad...")
+        #     print(f"Happiness: {kitty['happiness']}")
+        # elif randDec == 2:
+        #     kitty["health"] -= 1
+        #     print(f"{kitty['name']} is feeling sick!")
+        #     print(f"Health: {kitty['health']}")
 
-        kitty["hunger"] = max(0, kitty["hunger"])
-        kitty["happiness"] = max(0, kitty["happiness"])
-        kitty["health"] = max(0, kitty["health"])
+        # kitty["hunger"] = max(0, kitty["hunger"])
+        # kitty["happiness"] = max(0, kitty["happiness"])
+        # kitty["health"] = max(0, kitty["health"])
 
-        if 0 in [kitty["hunger"], kitty["happiness"], kitty["health"]]:
-            print(f"{kitty['name']} has passed away... Game Over.")
-            exit()
+        # if 0 in [kitty["hunger"], kitty["happiness"], kitty["health"]]:
+        #     print(f"{kitty['name']} has passed away... Game Over.")
+        #     exit()
 
 def command(kitty):
     while True:
-        command = input(f"Enter command (status, feed, play, heal, exit): ").strip().lower()
-        print("\n")
+        # command = input(f"Enter command (status, feed, play, heal, exit): ").strip().lower()
+
+        command = "play"
 
         if command == "status":
             print(f"Updated Stats:")
@@ -130,15 +132,16 @@ def command(kitty):
                 print(f"{kitty['name']} is full!")
                 print(f"Hunger: {kitty['hunger']}")
         elif command == "play":
-            if kitty["happiness"] < 5:
-                kitty["happiness"] += 1
-                print(f"You played with {kitty['name']}!")
-                print(kitty["img"])
-                print(f"Happiness: {kitty['happiness']}")
-            else:
-                print(kitty["img"])
-                print(f"{kitty['name']} is sooo happy!")
-                print(f"Happiness: {kitty['happiness']}")
+            play(kitty)
+            # if kitty["happiness"] < 5:
+            #     kitty["happiness"] += 1
+            #     print(f"You played with {kitty['name']}!")
+            #     print(kitty["img"])
+            #     print(f"Happiness: {kitty['happiness']}")
+            # else:
+            #     print(kitty["img"])
+            #     print(f"{kitty['name']} is sooo happy!")
+            #     print(f"Happiness: {kitty['happiness']}")
         elif command == "heal":
             if kitty["health"] < 5:
                 kitty["health"] += 1
@@ -154,6 +157,43 @@ def command(kitty):
             exit()
         else:
             print("Invalid command, try again.")
+
+def play(kitty):
+    while True:
+        choice = input(r"""Choose your minigame!
+            Option 1: Shooting stars
+            (more coming later!)
+        """)
+
+        if choice == "1":
+            ss(kitty)
+
+def ss(kitty):
+    star = "STAR"
+    width = 100
+    height = 20
+    position = random.randint(0, width - len(star) - 1)
+    kimgLines = kitty["img"].split("\n")
+    kimgHeight = len(kimgLines)
+
+    for y in range(1, height - 1):
+        os.system("cls" if os.name == "nt" else "clear")
+    
+        print("+" + "-" * (width - 2) + "+")
+
+        for i in range(1, height - 1):
+            if i == y:
+                print("|" + " " * position + star + " " * (width - position - len(star) - 2) + "|")
+            else:
+                print("|" + " " * (width - 2) + "|")
+
+        for line in kimgLines:
+            padding = (width - len(line)) // 2
+            print(" " * padding + line + " " * (width - len(line) - padding - 2) + "|")
+
+        print("+" + "-" * (width - 2) + "+")
+
+        time.sleep(0.2)
 
 def main():
     if start():
