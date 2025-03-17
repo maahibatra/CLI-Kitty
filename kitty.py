@@ -3,23 +3,22 @@ import random
 import threading
 import os
 
-gamePause = threading.Event()
+busy = False
 
 def start():
     print(r"""
-                    ‿‿‿‿‿‿‿‿‿‿‿,     ⠀⢀⣀⡀⠀ ⡀⡀⠀⠀⠀⠀
-        ⎮╲ ╲ ╲ ╲ ╲ ╲╲ ╲        ⠀⠀⠀⠀  ⡠⠇⠈⢙⠉⠐⠅⠀⡦⢄⠀⠀
-        ⎮   ⎮︼︼︼︼︼︼︼︼︼  ⠀⠀ ⠀⢰⠁⠀⠑⠐⠀⠀⠀⠀ ⠀⠾⢄⠀
-        ⎮   ⎮                 ⠀ ⠀⠊⠀⠀⠀⠀⠀⠄⢄⠀⠀⠀⠀⢀⡜⠁
-        ⎮   ⎮                  ⢀⡜⠀⠀⠀ ⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⡸⠀
-        ⎮   ⎮                   ⠸⠀⠀⠀⠀⠀⠀⢀⠴⢠⡌⣀⠐⠀⠈⠘⠁⡄
-‿‿..,⎮‿⎮‿‿‿‿‿‿‿‿‿‿‿⎮.,      ⠀    ⢸⠃⠀⠀⢠⣾⣃⠀⠁⠀⢙⣶⣀⠀⠀⠘⡧
-⎮╲╲╲╲╲╲╲╲╲╲╲╲╲╲             ⠀⠀⠀⠀⠀ ⠘⠛⠀⠀⠀⢸⡾⠏⠀⠯⠀⠏⠀
-⎮   ⎮︼︼︼︼︼︼︼︼︼︼︼︼︼  ⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⣸⠀⢸⠃⠀⠀⠀⠀⠀⠀
-⎮   ⎮ᨳ   ____              ⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⡀⠀⠀⠨⠀⠀⠀⠀⠀⠀⠀
-⎮   ⎮     ⎮░░⎮    ⠀⠀⠀          ⠀ ⠀⠀⢠⡔⠂⠀⡀⠀⣀⠑⠤⢀⡀⠀⠀⠀
-⎮   ⎮     ⎮░░⎮    ⠀ ⠀⠀⠀       ⠀⠀⠀ ⠀⠀⠀⠀⠀⠁⠁⠀⠀⠈⠀⠀⠀⠀  
- 
+                            ‿‿‿‿‿‿‿‿‿‿‿,     ⠀⢀⣀⡀⠀ ⡀⡀⠀⠀⠀⠀
+                ⎮╲ ╲ ╲ ╲ ╲ ╲╲ ╲        ⠀⠀⠀⠀  ⡠⠇⠈⢙⠉⠐⠅⠀⡦⢄⠀⠀
+                ⎮   ⎮︼︼︼︼︼︼︼︼︼  ⠀⠀ ⠀⢰⠁⠀⠑⠐⠀⠀⠀⠀ ⠀⠾⢄⠀
+                ⎮   ⎮                 ⠀ ⠀⠊⠀⠀⠀⠀⠀⠄⢄⠀⠀⠀⠀⢀⡜⠁
+                ⎮   ⎮                  ⢀⡜⠀⠀⠀ ⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⡸⠀
+                ⎮   ⎮                   ⠸⠀⠀⠀⠀⠀⠀⢀⠴⢠⡌⣀⠐⠀⠈⠘⠁⡄
+        ‿‿..,⎮‿⎮‿‿‿‿‿‿‿‿‿‿‿⎮.,      ⠀    ⢸⠃⠀⠀⢠⣾⣃⠀⠁⠀⢙⣶⣀⠀⠀⠘⡧
+        ⎮╲╲╲╲╲╲╲╲╲╲╲╲╲╲             ⠀⠀⠀⠀⠀ ⠘⠛⠀⠀⠀⢸⡾⠏⠀⠯⠀⠏⠀
+        ⎮   ⎮︼︼︼︼︼︼︼︼︼︼︼︼︼  ⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⣸⠀⢸⠃⠀⠀⠀⠀⠀⠀
+        ⎮   ⎮ᨳ   ____              ⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⡀⠀⠀⠨⠀⠀⠀⠀⠀⠀⠀
+        ⎮   ⎮     ⎮░░⎮    ⠀⠀⠀          ⠀ ⠀⠀⢠⡔⠂⠀⡀⠀⣀⠑⠤⢀⡀⠀⠀⠀
+        ⎮   ⎮     ⎮░░⎮    ⠀ ⠀⠀⠀       ⠀⠀⠀ ⠀⠀⠀⠀⠀⠁⠁⠀⠀⠈⠀⠀⠀⠀  
     """)
     time.sleep(1)
     print("CLI Kitty, get yours here!")
@@ -89,23 +88,26 @@ def name():
 
 def gameLoop(kitty):
     while True:
-        gamePause.wait()
-        time.sleep(random.randint(10, 25))
+        time.sleep(random.randint(3, 5))
+
+        if busy:
+            continue
+
         randDec = random.randint(0, 2)
 
         if randDec == 0:
             kitty["hunger"] -= 1
-            print(f"{kitty['name']} is getting hungry!")
+            print(f"\n{kitty['name']} is getting hungry!")
             time.sleep(1)
             print(f"Hunger: {kitty['hunger']}")
         elif randDec == 1:
             kitty["happiness"] -= 1
-            print(f"{kitty['name']} looks sad...")
+            print(f"\n{kitty['name']} looks sad...")
             time.sleep(1)
             print(f"Happiness: {kitty['happiness']}")
         elif randDec == 2:
             kitty["health"] -= 1
-            print(f"{kitty['name']} is feeling sick!")
+            print(f"\n{kitty['name']} is feeling sick!")
             time.sleep(1)
             print(f"Health: {kitty['health']}")
 
@@ -128,7 +130,6 @@ def command(kitty):
             time.sleep(1)
             print(f"{kitty['img']} \nHunger: {kitty['hunger']}, \nHappiness:  {kitty['happiness']}, \nHealth:  {kitty['health']}")
         elif command == "feed":
-            gamePause.clear()
             time.sleep(1)
             if kitty["hunger"] < 5:
                 feed(kitty)
@@ -142,14 +143,10 @@ def command(kitty):
                 print(f"{kitty['name']} is full and refuses to eat!")
                 time.sleep(1)
                 print(f"Hunger: {kitty['hunger']}")
-            gamePause.set()
         elif command == "play":
-            gamePause.clear()
             time.sleep(1)
             play(kitty)
-            gamePause.set()
         elif command == "heal":
-            gamePause.clear()
             time.sleep(1)
             if kitty["health"] < 5:
                 kitty["health"] += 1
@@ -160,7 +157,6 @@ def command(kitty):
                 print(kitty["img"])
                 print(f"{kitty['name']} is healthy!")
                 print(f"Health: {kitty['health']}")
-            gamePause.set()
         elif command == "exit":
             time.sleep(1)
             print("Exiting...")
@@ -171,6 +167,8 @@ def command(kitty):
             continue
 
 def feed(kitty):
+    global busy
+    busy = True
     while True:
         print(f"Select something for {kitty['name']} to eat!")
         time.sleep(1)
@@ -180,7 +178,8 @@ def feed(kitty):
         Option 2: Fish
         Option 3: A literal star
         Option 4: Secret fourth option
-        1, 2, 3, or 4:
+        exit: Exit food selector
+        1, 2, 3, 4, or exit:
         """).strip()
 
         if choice == "1":
@@ -195,14 +194,21 @@ def feed(kitty):
         elif choice == "4":
             time.sleep(1)
             print(f"{kitty['name']} finds a secret snack and purrs mysteriously.")
+        elif choice == "exit":
+            time.sleep(1)
+            print("Exiting minigame selector...")
+            return
         else:
             time.sleep(1)
             print("Invalid option, try again.")
             continue
 
+        busy = False
         return
 
 def play(kitty):
+    global busy
+    busy = True
     while True:
         choice = input(r"""Choose your minigame!
             Option 1: Rock paper scissors
@@ -213,7 +219,7 @@ def play(kitty):
         """).strip().lower()
 
         if choice == "1":
-            wlt = rpt()
+            wlt = rpt(kitty)
             if wlt == "win" and kitty["happiness"] < 5:
                 kitty["happiness"] += 1
                 print(f"You played with {kitty['name']}!")
@@ -229,7 +235,7 @@ def play(kitty):
                 print(f"Happiness: {kitty['happiness']}")
             return
         elif choice == "2":
-            wlt = hm()
+            wlt = hm(kitty)
             if wlt == "win" and kitty["happiness"] < 5:
                 kitty["happiness"] += 1
                 print(f"You played with {kitty['name']}!")
@@ -248,8 +254,14 @@ def play(kitty):
             time.sleep(1)
             print("Exiting minigame selector...")
             return
+        else:
+            time.sleep(1)
+            print("Invalid option, try again.")
+            continue
 
-def rpt():
+        busy = False
+
+def rpt(kitty):
     time.sleep(1)
     print("IT'S TIME TO ROCK PAPER SCISSORS TO THE DEATH!- I mean... for funsies!! Yeah...")
     time.sleep(1)
@@ -290,7 +302,7 @@ def rpt():
         return "loss"
     time.sleep(1)
 
-def hm():
+def hm(kitty):
     time.sleep(1)
     print(f"MUAHAHAHA I'M GONNA BEAT YOU AT THIS GAME AND STEAL {kitty['name']}-... Friendly match, totally")
 
@@ -299,6 +311,8 @@ def hm():
     guessed = ["_"] * len(word)
     attempts = 6
     wrong_guesses = []
+
+    print(" ".join(guessed))
 
     while attempts > 0 and "_" in guessed:
         guess = input("Guess a letter: ").lower().strip()
@@ -326,7 +340,7 @@ def hm():
             print(f"WRONG! {attempts} attempts left.")
 
         print(" ".join(guessed))
-        print(f"Wrong guess: {', '.join(wrong_guesses)}")
+        print(f"Wrong guesses: {', '.join(wrong_guesses)}")
 
     if "_" not in guessed:
         time.sleep(1)
@@ -344,7 +358,7 @@ def main():
         kitty = {
             "img": kimg,
             "name": kname,
-            "hunger": 4,
+            "hunger": 3,
             "happiness": 5,
             "health": 5
         }
@@ -362,6 +376,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# random todo list
-# - add timesleep everywhere
