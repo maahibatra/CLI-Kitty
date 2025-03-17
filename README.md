@@ -11,7 +11,6 @@
 - Heal kitty when she's ill!
 
 
-## Might Add/To-Do
-- Wait frick, I forgot cats have to sleep... Shoot so do I
+## To-Do
 - Feral kitty, mayhaps?
 - Saving so it doesn't restart everytime you play it

@@ -6,30 +6,32 @@ import os
 busy = False
 
 def start():
-    print(r"""
-                            ‿‿‿‿‿‿‿‿‿‿‿,     ⠀⢀⣀⡀⠀ ⡀⡀⠀⠀⠀⠀
-                ⎮╲ ╲ ╲ ╲ ╲ ╲╲ ╲        ⠀⠀⠀⠀  ⡠⠇⠈⢙⠉⠐⠅⠀⡦⢄⠀⠀
-                ⎮   ⎮︼︼︼︼︼︼︼︼︼  ⠀⠀ ⠀⢰⠁⠀⠑⠐⠀⠀⠀⠀ ⠀⠾⢄⠀
-                ⎮   ⎮                 ⠀ ⠀⠊⠀⠀⠀⠀⠀⠄⢄⠀⠀⠀⠀⢀⡜⠁
-                ⎮   ⎮                  ⢀⡜⠀⠀⠀ ⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⡸⠀
-                ⎮   ⎮                   ⠸⠀⠀⠀⠀⠀⠀⢀⠴⢠⡌⣀⠐⠀⠈⠘⠁⡄
-        ‿‿..,⎮‿⎮‿‿‿‿‿‿‿‿‿‿‿⎮.,      ⠀    ⢸⠃⠀⠀⢠⣾⣃⠀⠁⠀⢙⣶⣀⠀⠀⠘⡧
-        ⎮╲╲╲╲╲╲╲╲╲╲╲╲╲╲             ⠀⠀⠀⠀⠀ ⠘⠛⠀⠀⠀⢸⡾⠏⠀⠯⠀⠏⠀
-        ⎮   ⎮︼︼︼︼︼︼︼︼︼︼︼︼︼  ⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⣸⠀⢸⠃⠀⠀⠀⠀⠀⠀
-        ⎮   ⎮ᨳ   ____              ⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⡀⠀⠀⠨⠀⠀⠀⠀⠀⠀⠀
-        ⎮   ⎮     ⎮░░⎮    ⠀⠀⠀          ⠀ ⠀⠀⢠⡔⠂⠀⡀⠀⣀⠑⠤⢀⡀⠀⠀⠀
-        ⎮   ⎮     ⎮░░⎮    ⠀ ⠀⠀⠀       ⠀⠀⠀ ⠀⠀⠀⠀⠀⠁⠁⠀⠀⠈⠀⠀⠀⠀  
-    """)
-    time.sleep(1)
-    print("CLI Kitty, get yours here!")
-    time.sleep(1)
-    consent = input(f"You there... do you want a CLI Kitty? Y/N: ").strip().lower()
+    # print(r"""
+    #                         ‿‿‿‿‿‿‿‿‿‿‿,     ⠀⢀⣀⡀⠀ ⡀⡀⠀⠀⠀⠀
+    #             ⎮╲ ╲ ╲ ╲ ╲ ╲╲ ╲        ⠀⠀⠀⠀  ⡠⠇⠈⢙⠉⠐⠅⠀⡦⢄⠀⠀
+    #             ⎮   ⎮︼︼︼︼︼︼︼︼︼  ⠀⠀ ⠀⢰⠁⠀⠑⠐⠀⠀⠀⠀ ⠀⠾⢄⠀
+    #             ⎮   ⎮                 ⠀ ⠀⠊⠀⠀⠀⠀⠀⠄⢄⠀⠀⠀⠀⢀⡜⠁
+    #             ⎮   ⎮                  ⢀⡜⠀⠀⠀ ⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⡸⠀
+    #             ⎮   ⎮                   ⠸⠀⠀⠀⠀⠀⠀⢀⠴⢠⡌⣀⠐⠀⠈⠘⠁⡄
+    #     ‿‿..,⎮‿⎮‿‿‿‿‿‿‿‿‿‿‿⎮.,      ⠀    ⢸⠃⠀⠀⢠⣾⣃⠀⠁⠀⢙⣶⣀⠀⠀⠘⡧
+    #     ⎮╲╲╲╲╲╲╲╲╲╲╲╲╲╲             ⠀⠀⠀⠀⠀ ⠘⠛⠀⠀⠀⢸⡾⠏⠀⠯⠀⠏⠀
+    #     ⎮   ⎮︼︼︼︼︼︼︼︼︼︼︼︼︼  ⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⣸⠀⢸⠃⠀⠀⠀⠀⠀⠀
+    #     ⎮   ⎮ᨳ   ____              ⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⡀⠀⠀⠨⠀⠀⠀⠀⠀⠀⠀
+    #     ⎮   ⎮     ⎮░░⎮    ⠀⠀⠀          ⠀ ⠀⠀⢠⡔⠂⠀⡀⠀⣀⠑⠤⢀⡀⠀⠀⠀
+    #     ⎮   ⎮     ⎮░░⎮    ⠀ ⠀⠀⠀       ⠀⠀⠀ ⠀⠀⠀⠀⠀⠁⠁⠀⠀⠈⠀⠀⠀⠀  
+    # """)
+    # time.sleep(1)
+    # print("CLI Kitty, get yours here!")
+    # time.sleep(1)
+    # consent = input(f"You there... do you want a CLI Kitty? Y/N: ").strip().lower()
 
-    if consent == "y":
-        return True
-    else:
-        print("Alright, maybe next time!")
-        return False
+    # if consent == "y":
+    #     return True
+    # else:
+    #     print("Alright, maybe next time!")
+    #     return False
+
+    return True
 
 def img():
     options = {
@@ -62,29 +64,32 @@ def img():
     }
 
     while True:
-        print(f"Alright, which one are ya eyeing?")
-        for key, art in options.items():
-            print(f"Option {key}:\n{art}")
+        # print(f"Alright, which one are ya eyeing?")
+        # for key, art in options.items():
+        #     print(f"Option {key}:\n{art}")
 
-        choice = input("1, 2, 3, or 4?: ").strip()
-        if choice in options:
-            return options[choice]
-        else:
-            print("Invalid choice, try again.")
-            continue
+        # choice = input("1, 2, 3, or 4?: ").strip()
+        # if choice in options:
+        #     return options[choice]
+        # else:
+        #     print("Invalid choice, try again.")
+        #     continue
 
+        return options["2"]
 
 def name():
     while True:
-        time.sleep(1)
-        tname =  input("Name your CLI Kitty: ")
-        time.sleep(0.5)
-        consent = input(f"You want your Kitty to be named " + tname + " right? Y/N: ").strip().lower()
+        # time.sleep(1)
+        # tname =  input("Name your CLI Kitty: ")
+        # time.sleep(0.5)
+        # consent = input(f"You want your Kitty to be named " + tname + " right? Y/N: ").strip().lower()
 
-        if consent == "y":
-            return tname
-        else:
-            print("Okay, let's try again.")
+        # if consent == "y":
+        #     return tname
+        # else:
+        #     print("Okay, let's try again.")
+
+        return "kitty"
 
 def gameLoop(kitty):
     while True:
@@ -93,44 +98,47 @@ def gameLoop(kitty):
         if busy:
             continue
 
-        randDec = random.randint(0, 2)
+        randDec = random.randint(0, 3)
 
         if randDec == 0:
             kitty["hunger"] -= 1
-            print(f"\n{kitty['name']} is getting hungry!")
+            print(f"\n{kitty['name']} is getting hungry, feed her!")
             time.sleep(1)
             print(f"Hunger: {kitty['hunger']}")
         elif randDec == 1:
             kitty["happiness"] -= 1
-            print(f"\n{kitty['name']} looks sad...")
+            print(f"\n{kitty['name']} looks sad... Maybe a game to cheer her up?")
             time.sleep(1)
             print(f"Happiness: {kitty['happiness']}")
         elif randDec == 2:
             kitty["health"] -= 1
-            print(f"\n{kitty['name']} is feeling sick!")
+            print(f"\n{kitty['name']} is feeling sick! Heal her.")
+            time.sleep(1)
+            print(f"Health: {kitty['health']}")
+        elif randDec == 3:
+            kitty["sleep"] -= 1
+            print(f"\n{kitty['name']} is tired! Put her to sleep.")
             time.sleep(1)
             print(f"Health: {kitty['health']}")
 
         kitty["hunger"] = max(0, kitty["hunger"])
         kitty["happiness"] = max(0, kitty["happiness"])
         kitty["health"] = max(0, kitty["health"])
+        kitty["sleep"] = max(0, kitty["sleep"])
 
-        if 0 in [kitty["hunger"], kitty["happiness"], kitty["health"]]:
+        if 0 in [kitty["hunger"], kitty["happiness"], kitty["health"], kitty["sleep"]]:
             print(f"{kitty['name']} has passed away... Game Over.")
-            time.sleep(2)
             exit()
 
 def command(kitty):
     while True:
-        command = input(f"Enter command (status, feed, play, heal, exit): ").strip().lower()
+        command = input(f"Enter command (status, feed, play, heal, sleep, or exit): ").strip().lower()
 
         if command == "status":
-            time.sleep(1)
             print(f"Updated Stats:")
             time.sleep(1)
-            print(f"{kitty['img']} \nHunger: {kitty['hunger']}, \nHappiness:  {kitty['happiness']}, \nHealth:  {kitty['health']}")
+            print(f"{kitty['img']} \nHunger: {kitty['hunger']}, \nHappiness:  {kitty['happiness']}, \nHealth:  {kitty['health']}, \nSleep: {kitty["sleep"]}")
         elif command == "feed":
-            time.sleep(1)
             if kitty["hunger"] < 5:
                 feed(kitty)
                 kitty["hunger"] += 1
@@ -138,7 +146,6 @@ def command(kitty):
                 time.sleep(1)
                 print(f"Hunger: {kitty['hunger']}")
             else:
-                time.sleep(1)
                 print(kitty["img"])
                 print(f"{kitty['name']} is full and refuses to eat!")
                 time.sleep(1)
@@ -147,7 +154,6 @@ def command(kitty):
             time.sleep(1)
             play(kitty)
         elif command == "heal":
-            time.sleep(1)
             if kitty["health"] < 5:
                 kitty["health"] += 1
                 print(f"You took care of {kitty['name']}!")
@@ -157,12 +163,12 @@ def command(kitty):
                 print(kitty["img"])
                 print(f"{kitty['name']} is healthy!")
                 print(f"Health: {kitty['health']}")
+        elif command == "sleep":
+            sleep(kitty)
         elif command == "exit":
-            time.sleep(1)
             print("Exiting...")
             exit()
         else:
-            time.sleep(1)
             print("Invalid command, try again.")
             continue
 
@@ -351,6 +357,31 @@ def hm(kitty):
         print(f"YOU LOSE MUAHAHAHA... Well, you're a good carer, you can keep your CLI Kitty for now.")
         return "loss"
 
+def sleep(kitty):
+    global busy
+    busy = True
+    while True:
+        print(f"{kitty['name']} is curling up for a nap... They'll wake up in 15 seconds!")
+        print(f"{kitty['img']}")
+        time.sleep(5)
+        print(f"10 seconds left!")
+        time.sleep(5)
+        print(f"5 seconds left!")
+        time.sleep(5)
+        
+        if kitty["sleep"] < 5:
+            kitty["sleep"] += 1
+            print(kitty["img"])
+            time.sleep(1)
+            print(f"{kitty['name']} slept so welllll!\nSleep: {kitty['sleep']}")
+
+        if kitty["happiness"] < 5:
+            kitty["happiness"] += 1
+            print(f"{kitty['name']} seems extra cuddly after a nap!\nHappiness: {kitty['happiness']}")
+
+        busy = False
+        return
+
 def main():
     if start():
         kimg = img()
@@ -360,14 +391,14 @@ def main():
             "name": kname,
             "hunger": 5,
             "happiness": 5,
-            "health": 5
+            "health": 5,
+            "sleep": 5
         }
         time.sleep(1)
         print("Meet your CLI Kitty, " + kname + "!")
         time.sleep(1)
-        print(f"{kitty['img']} \nHunger: {kitty['hunger']}, \nHappiness:  {kitty['happiness']}, \nHealth:  {kitty['health']}")
-
-        "Remember to check in on Kitty! She gets hungry, sad, and sick fast! (Every 10-25 seconds)"
+        print(f"{kitty['img']} \nHunger: {kitty['hunger']}, \nHappiness:  {kitty['happiness']}, \nHealth:  {kitty['health']}, \nSleep: {kitty["sleep"]}")
+        print(f"Remember to check in on Kitty! She gets hungry, sad, and sick fast (Every 10-25 seconds)!")
 
         gameThread = threading.Thread(target = gameLoop, args=(kitty,), daemon=True)
         gameThread.start()
