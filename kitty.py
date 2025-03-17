@@ -88,7 +88,7 @@ def name():
 
 def gameLoop(kitty):
     while True:
-        time.sleep(random.randint(3, 5))
+        time.sleep(random.randint(10, 25))
 
         if busy:
             continue
@@ -358,7 +358,7 @@ def main():
         kitty = {
             "img": kimg,
             "name": kname,
-            "hunger": 3,
+            "hunger": 5,
             "happiness": 5,
             "health": 5
         }
