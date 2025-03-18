@@ -5,11 +5,11 @@
 ## Awesome Features
 
 - You get to choose from four cats and give it a name!
-- Kitty has stats (health, happiness, and hunger) and you gotta take care of her according to them!
-- Two cool minigames (it's literally just rock paper scissors and hangman)
+- Kitty has stats (health, happiness, hunger, and sleep) and you gotta take care of kitty according to them!
+- Two cool minigames (it's literally just rock paper scissors and hangman) and you can play them whenever! (Other functions only work when kitty is low on stats)
 - You get to feed kitty out of four options! One is mysterious. You will never know what she ate.
 - Heal kitty when she's ill!
-
+- Put kitty to sleep (for 15 seconds) to recharge her! Also increases her happiness if it's not full.
 
 ## To-Do
 - Feral kitty, mayhaps?
