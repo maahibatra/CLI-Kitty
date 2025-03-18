@@ -14,3 +14,20 @@
 ## To-Do
 - Feral kitty, mayhaps?
 - Saving so it doesn't restart everytime you play it
+
+## How To Set-Up
+
+Clone the repo:
+    ```sh
+    git clone https://github.com/your-repo-name.git
+    ```
+Navigate to the project directory:
+    ```sh
+    cd your-repo-name
+    ```
+
+## Usage
+Run the project with:
+```sh
+    python3 kitty.py
+```
